@@ -7,17 +7,23 @@ class Form extends React.Component {
     this.state = {
       temp:'',
       todolist:[],
-      randomNumberList:[],
+      errormsg:"",
     };
   }
 
   clickHandler(event){
-    let temp = this.state.temp
-    this.setState({
-      todolist:[temp, ...this.state.todolist],
-      temp:"",
-      id:0,
-    });
+    if(this.state.temp.length>1) {
+      let temp = this.state.temp
+      this.setState({
+        todolist:[temp, ...this.state.todolist],
+        temp:"",
+        id:0,
+        errormsg:""
+      });
+    } else {
+      console.log('diu ni')
+      this.setState({errormsg:"Hello you need to type something"})
+    }
   }
 
   changeHandler(event){
@@ -56,28 +62,27 @@ class Form extends React.Component {
 
   render() {
     // calling cx sets all the styles on the element in the display variable
-    let {clicked} = this.state;
     let List
     if (this.state.todolist.length > 0) {
-        List = this.state.todolist.map((list,index)=> {
-                return (
-                  <div>
-                    <li key={list}>{list}</li>
-                    <button value={index} onClick={(event)=>{this.deletelist(event)}}>delete</button>
-                  </div>
-                  )
-            });
-        }
+      List = this.state.todolist.map((list,index)=> {
+        return (
+          <div>
+            <li key={list}>{list}</li>
+            <button value={index} onClick={(event)=>{this.deletelist(event)}}>delete</button>
+          </div>
+        )
+      });
+    }
     return (
       <div>
         <div>
           <br/>
           Recent added: {this.state.todolist[0]}
+          <p>{this.state.errormsg}</p>
           <br/>
           <input id="inputBtn" value={this.state.temp} onChange={(event)=>{this.changeHandler(event);}}/>
         </div>
         <div>
-          <p>{this.state.randomNumberList[0]}</p>
           <button id="btnInput" onClick={()=>{this.clickHandler()}}>Click</button>
           <ul>{List}</ul>
         </div>
