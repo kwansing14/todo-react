@@ -14,14 +14,16 @@ class Form extends React.Component {
   clickHandler(event){
     if(this.state.temp.length>1) {
       let temp = this.state.temp
+      this.props.currentMsg(this.state.temp)
       this.setState({
         todolist:[temp, ...this.state.todolist],
         temp:"",
         id:0,
-        errormsg:""
+        errormsg:"",
       });
+      //button trigger reference
+
     } else {
-      console.log('diu ni')
       this.setState({errormsg:"Hello you need to type something"})
     }
   }
@@ -30,10 +32,7 @@ class Form extends React.Component {
     //this.setState({word:event.target.value});
     console.log("change", event.target.value);
     let currentValue = event.target.value
-
-      //dp nothing
     let tempF = Number(currentValue)*1.8+32;
-
     this.setState({
       temp: currentValue,
     })
@@ -76,15 +75,10 @@ class Form extends React.Component {
     return (
       <div>
         <div>
-          <br/>
-          Recent added: {this.state.todolist[0]}
-          <p>{this.state.errormsg}</p>
-          <br/>
           <input id="inputBtn" value={this.state.temp} onChange={(event)=>{this.changeHandler(event);}}/>
+          <button id="btnInput" onClick={()=>{this.clickHandler()}}>Click</button>
         </div>
         <div>
-          <button id="btnInput" onClick={()=>{this.clickHandler()}}>Click</button>
-          <ul>{List}</ul>
         </div>
       </div>
     );
