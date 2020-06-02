@@ -19,6 +19,9 @@ class TodoApp extends React.Component {
     this.refs.child.updateList(v);
   }
 
+  updateDeleteList(v){
+    this.refs.deleteChild.updateDeleteList(v);
+  }
 
   render() {
     return (
@@ -28,9 +31,13 @@ class TodoApp extends React.Component {
         <Form currentMsg={(v) => {this.setValue(v)}}/>
         <ItemList
           ref='child'
-          currentMsg={this.state.msg}
+          updateDeleteList={
+            (v) => {this.updateDeleteList(v)}
+          }
         />
-        <DeleteItemList/>
+        <DeleteItemList
+          ref='deleteChild'
+        />
       </div>
     );
   }
